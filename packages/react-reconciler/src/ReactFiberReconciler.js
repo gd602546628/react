@@ -152,7 +152,36 @@ function scheduleRootUpdate(
   }
 
   flushPassiveEffects();
-  enqueueUpdate(current, update);
+  /*
+  *  update:{
+  *   expirationTime: expirationTime,
+
+     tag: UpdateState,
+    payload: null,
+    callback: null,
+
+    next: null,
+    nextEffect: null,
+  *  }
+  *
+  *
+  *   UpdateQueue = {
+    baseState,
+    firstUpdate: null,
+    lastUpdate: null,
+    firstCapturedUpdate: null,
+    lastCapturedUpdate: null,
+    firstEffect: null,
+    lastEffect: null,
+    firstCapturedEffect: null,
+    lastCapturedEffect: null,
+  };
+  *  fiber.updateQueue = updateQueue
+  *  updateQueue.firstUpdate = update
+  *
+  *
+  * */
+  enqueueUpdate(current, update); // 给fiber设置updateQueue
   scheduleWork(current, expirationTime);
 
   return expirationTime;
@@ -166,7 +195,7 @@ export function updateContainerAtExpirationTime(
   callback: ?Function,
 ) {
   // TODO: If this is a nested container, this won't be the root.
-  const current = container.current;
+  const current = container.current; // 当前节点fiber
 
   if (__DEV__) {
     if (ReactFiberInstrumentation.debugTool) {
@@ -181,7 +210,7 @@ export function updateContainerAtExpirationTime(
   }
 
   const context = getContextForSubtree(parentComponent);
-  if (container.context === null) {
+  if (container.context === null) { //
     container.context = context;
   } else {
     container.pendingContext = context;
@@ -281,7 +310,7 @@ export function createContainer(
 
 export function updateContainer(
   element: ReactNodeList,
-  container: OpaqueRoot,
+  container: OpaqueRoot,// fiber
   parentComponent: ?React$Component<any, any>,
   callback: ?Function,
 ): ExpirationTime {

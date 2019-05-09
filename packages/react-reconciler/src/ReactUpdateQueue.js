@@ -284,9 +284,9 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
       warningWithoutStack(
         false,
         'An update (setState, replaceState, or forceUpdate) was scheduled ' +
-          'from inside an update function. Update functions should be pure, ' +
-          'with zero side-effects. Consider using componentDidUpdate or a ' +
-          'callback.',
+        'from inside an update function. Update functions should be pure, ' +
+        'with zero side-effects. Consider using componentDidUpdate or a ' +
+        'callback.',
       );
       didWarnUpdateInsideUpdate = true;
     }
@@ -577,7 +577,7 @@ function callCallback(callback, context) {
   invariant(
     typeof callback === 'function',
     'Invalid argument passed as callback. Expected a function. Instead ' +
-      'received: %s',
+    'received: %s',
     callback,
   );
   callback.call(context);

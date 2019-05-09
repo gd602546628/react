@@ -369,6 +369,7 @@ function ReactRoot(
   const root = createContainer(container, isConcurrent, hydrate);
   this._internalRoot = root;
 }
+
 ReactRoot.prototype.render = function(
   children: ReactNodeList,
   callback: ?() => mixed,
@@ -550,9 +551,9 @@ function legacyRenderSubtreeIntoContainer(
   // TODO: Without `any` type, Flow says "Property cannot be accessed on any
   // member of intersection type." Whyyyyyy.
   let root: Root = (container._reactRootContainer: any);
-  if (!root) {
+  if (!root) { // root节点不存在
     // Initial mount
-    root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
+    root = container._reactRootContainer = legacyCreateRootFromDOMContainer( // 依据传入dom制造根节点,这里返回 new ReactRoot
       container,
       forceHydrate,
     );
@@ -564,6 +565,7 @@ function legacyRenderSubtreeIntoContainer(
       };
     }
     // Initial mount should not be batched.
+
     unbatchedUpdates(() => {
       if (parentComponent != null) {
         root.legacy_renderSubtreeIntoContainer(
@@ -594,7 +596,7 @@ function legacyRenderSubtreeIntoContainer(
       root.render(children, callback);
     }
   }
-  return getPublicRootInstance(root._internalRoot);
+  return getPublicRootInstance(root._internalRoot); //返回根实例，非根节点，而是跟节点的第一个组件实例
 }
 
 function createPortal(
@@ -674,7 +676,7 @@ const ReactDOM: Object = {
     container: DOMContainer,
     callback: ?Function,
   ) {
-    invariant(
+    invariant( // 挂载点检测
       isValidContainer(container),
       'Target container is not a DOM element.',
     );
@@ -687,7 +689,7 @@ const ReactDOM: Object = {
         enableStableConcurrentModeAPIs ? 'createRoot' : 'unstable_createRoot',
       );
     }
-    return legacyRenderSubtreeIntoContainer(
+    return legacyRenderSubtreeIntoContainer( // 把子树渲染到container
       null,
       element,
       container,

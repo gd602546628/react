@@ -669,7 +669,12 @@ function updateReducer<S, I, A>(
           hook.baseState = newState;
         }
 
+<<<<<<< HEAD
         queue.lastRenderedState = newState;
+=======
+        queue.eagerReducer = reducer;
+        queue.eagerState = newState;
+>>>>>>> 29b7b775f2ecf878eaf605be959d959030598b07
 
         return [newState, dispatch];
       }
